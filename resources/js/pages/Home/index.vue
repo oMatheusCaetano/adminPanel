@@ -1,16 +1,8 @@
 <template>
-  <Title title="Hello World Page Home Here" />
+  <div class="bg-red-700" style="height: 200px; width: 200px;">
+
+  </div>
 </template>
-
-<script>
-import { defineAsyncComponent } from 'vue';
-
-export default {
-  components: {
-    Title: defineAsyncComponent(() => import('@components/text/Title')),
-  },
-};
-</script>
 
 <style>
 
