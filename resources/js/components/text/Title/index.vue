@@ -7,11 +7,11 @@ export default {
   props: {
     title: String,
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '@styleVariables';
+@import "@styleVariables";
 
 h2 {
   color: $orange;

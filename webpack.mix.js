@@ -1,20 +1,29 @@
 /* eslint-disable global-require */
 
-const mix = require('laravel-mix')
-const path = require('path')
+const mix = require('laravel-mix');
+const path = require('path');
+
+const jsResourcesPath = 'resources/js';
+const sassResourcesPath = 'resources/sass';
+const jsPublicPath = 'public/js';
+const cssPublicPath = 'public/css';
+
+const addJsResource = (filename) => `resources/js/${filename}.js`;
+const addSassResource = (filename) => `resources/sass/${filename}.scss`;
 
 mix
   .vue({ version: 3 })
-  .js('resources/js/main.js', 'public/js')
-  .sass('resources/sass/main.scss', 'public/css')
+  .js(addJsResource('main'), jsPublicPath)
+  .sass(addSassResource('main'), cssPublicPath)
   .webpackConfig({
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'resources/js'),
-        '@page': path.resolve(__dirname, 'resources/js/pages'),
-        '@component': path.resolve(__dirname, 'resources/js/components'),
-        '@style': path.resolve(__dirname, 'resources/sass'),
-        '@styleVariables': path.resolve(__dirname, 'resources/sass/_variables.scss'),
+        '@': path.resolve(__dirname, jsResourcesPath),
+        '@pages': path.resolve(__dirname, `${jsResourcesPath}/pages`),
+        '@components': path.resolve(__dirname, `${jsResourcesPath}/components`),
+        '@style': path.resolve(__dirname, sassResourcesPath),
+        '@mainStyles': path.resolve(__dirname, `${sassResourcesPath}/main.scss`),
+        '@styleVariables': path.resolve(__dirname, `${sassResourcesPath}/_variables.scss`),
       },
     },
     module: {
@@ -29,4 +38,4 @@ mix
         },
       ],
     },
-  })
+  });

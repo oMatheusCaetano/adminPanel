@@ -3,13 +3,13 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent } from 'vue';
 
 export default {
   components: {
-    Title: defineAsyncComponent(() => import('@component/text/Title')),
+    Title: defineAsyncComponent(() => import('@components/text/Title')),
   },
-}
+};
 </script>
 
 <style>

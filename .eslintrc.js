@@ -11,7 +11,6 @@ module.exports = {
     'vue',
   ],
   rules: {
-    semi: ['error', 'never'],
     'import/extensions': [
       'error',
       'ignorePackages',
