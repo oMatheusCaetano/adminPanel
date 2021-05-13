@@ -19,7 +19,7 @@ export default {
   props: {
     flag: {
       type: String,
-      required: true,
+      default: '',
     },
     name: String,
     withoutName: Boolean,

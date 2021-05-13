@@ -13,70 +13,98 @@
       bg-purple-700
     "
   >
-    <div class="relative" @dblclick="enableInputEdit(filteredBankName)">
+    <div class="relative" @dblclick="enableInputEdit(generateId('bankName'))">
       <div>
         <input
+          v-show="editingInput === generateId('bankName')"
+          :ref="generateId('bankName')"
           :class="`${inputsClasses} w-64`"
-          :value="filteredBankName.value"
-          :ref="filteredBankName.id"
-          v-show="filteredBankName.edit"
-          @blur="disableInputEdit(filteredBankName)"
-          @keyup.enter="saveInputData(filteredBankName)"
+          :value="card.bankName"
+          @blur="disableInputEdit()"
+          @keyup.enter="saveInputData(generateId('bankName'))"
         />
       </div>
-      <h6 class="font-bold">{{ filteredBankName.value }}</h6>
+      <h6 class="font-bold">{{ card.bankName }}</h6>
     </div>
 
-    <div class="relative" @dblclick="enableInputEdit(filteredUserName)">
+    <div class="relative" @dblclick="enableInputEdit(generateId('ownerName'))">
       <div>
         <input
+          v-show="editingInput === generateId('ownerName')"
+          :ref="generateId('ownerName')"
           :class="`${inputsClasses} w-64`"
-          :value="filteredUserName.value"
-          :ref="filteredUserName.id"
-          v-show="filteredUserName.edit"
-          @blur="disableInputEdit(filteredUserName)"
-          @keyup.enter="saveInputData(filteredUserName)"
+          :value="card.ownerName"
+          @blur="disableInputEdit()"
+          @keyup.enter="saveInputData(generateId('ownerName'))"
         />
       </div>
-      <h6 class="text-sm">{{ filteredUserName.value }}</h6>
+      <h6 class="text-sm">{{ card.ownerName }}</h6>
     </div>
 
-    <div class="relative" @dblclick="enableInputEdit(filteredCardNumber)">
+    <div class="relative" @dblclick="enableInputEdit(generateId('number'))">
       <div>
         <input
+          v-show="editingInput === generateId('number')"
+          :ref="generateId('number')"
           :class="`${inputsClasses} w-64`"
-          :value="filteredCardNumber.value"
-          :ref="filteredCardNumber.id"
-          v-show="filteredCardNumber.edit"
-          @blur="disableInputEdit(filteredCardNumber)"
-          @keyup.enter="saveInputData(filteredCardNumber)"
+          :value="card.number"
+          @blur="disableInputEdit()"
+          @keyup.enter="saveInputData(generateId('number'))"
         />
       </div>
-      <h6 class="font-medium text-lg">{{ filteredCardNumber.value }}</h6>
+      <h6 class="font-medium text-lg">{{ card.number }}</h6>
     </div>
 
     <footer class="flex justify-around items-end">
-      <div
-        class="relative"
-        v-for="(input, index) in filteredEditableInputs"
-        :key="index"
-        @dblclick="enableInputEdit(input)"
-      >
-        <label class="text-xs font-light">{{ input.label }}</label>
+      <div class="relative" @dblclick="enableInputEdit(generateId('memberSince'))">
+        <label class="text-xs font-light">M.S</label>
         <div>
           <input
-            :class="inputsClasses"
-            value="07/27"
-            :ref="input.id"
-            v-show="input.edit"
-            @blur="disableInputEdit(input)"
-            @keyup.enter="saveInputData(input)"
+            v-show="editingInput === generateId('memberSince')"
+            :ref="generateId('memberSince')"
+            :class="`${inputsClasses} w-8`"
+            :value="card.memberSince"
+            @blur="disableInputEdit()"
+            @keyup.enter="saveInputData(generateId('memberSince'))"
           />
         </div>
-        <p class="leading-3 font-medium">{{ input.value }}</p>
+        <LoadingSpinner v-if="editingInputLoading === generateId('memberSince')" size="12px" />
+        <p class="leading-3 font-medium" v-else>{{ card.memberSince }}</p>
       </div>
 
-      <CreditCardFlag :flag="flag" />
+      <div class="relative" @dblclick="enableInputEdit(generateId('validThru'))">
+        <label class="text-xs font-light">M.S</label>
+        <div>
+          <input
+            v-show="editingInput === generateId('validThru')"
+            :ref="generateId('validThru')"
+            :class="`${inputsClasses} w-8`"
+            :value="card.validThru"
+            @blur="disableInputEdit()"
+            @keyup.enter="saveInputData(generateId('validThru'))"
+          />
+        </div>
+        <LoadingSpinner v-if="editingInputLoading === generateId('validThru')" size="12px" />
+        <p class="leading-3 font-medium" v-else>{{ card.validThru }}</p>
+      </div>
+
+      <div class="relative" @dblclick="enableInputEdit(generateId('securityCode'))">
+        <label class="text-xs font-light">M.S</label>
+        <div>
+          <input
+            v-show="editingInput === generateId('securityCode')"
+            :ref="generateId('securityCode')"
+            :class="`${inputsClasses} w-8`"
+            :value="card.securityCode"
+            @blur="disableInputEdit()"
+            @keyup.enter="saveInputData($event.target.value, 'securityCode')"
+          />
+        </div>
+        <LoadingSpinner v-if="editingInputLoading === generateId('securityCode')" size="12px" />
+        <p class="leading-3 font-medium" v-else>{{ card.securityCode }}</p>
+      </div>
+
+      <CreditCardFlag :flag="card.flag" />
     </footer>
   </div>
 </template>
@@ -86,96 +114,41 @@ import { defineAsyncComponent } from 'vue';
 
 export default {
   props: {
-    flag: {
-      type: String,
+    card: {
+      type: Object,
       required: true,
     },
-    editable: {
-      type: Boolean,
-      default: false,
-    },
+
+    onEdit: Function,
+    editable: Boolean,
   },
 
   data: () => ({
+    editingInput: '',
+    editingInputLoading: '',
+    isInputEditing: false,
     inputsClasses:
       'bg-gray-200 appearance-none border-2 border-gray-200 rounded absolute w-24 py-2 px-4 text-gray-700 text-center leading-tight focus:outline-none focus:bg-white focus:border-purple-500',
-    editableInputs: [
-      {
-        category: 1,
-        id: 'nubank',
-        value: 'Nu Bank',
-        edit: false,
-      },
-
-      {
-        category: 2,
-        id: 'matheuscaetano',
-        value: 'Matheus dos Santos Caetano',
-        edit: false,
-      },
-
-      {
-        category: 3,
-        id: '00000000',
-        value: '0000 0000 0000 0000',
-        edit: false,
-      },
-
-      {
-        category: 4,
-        label: 'M.S',
-        id: 'memberSinceInput',
-        value: '01/18',
-        edit: false,
-      },
-      {
-        category: 4,
-        label: 'V.T',
-        id: 'validTrueInput',
-        value: '07/27',
-        edit: false,
-      },
-      {
-        category: 4,
-        label: 'S.C',
-        id: 'securityCodeInput',
-        value: '457',
-        edit: false,
-      },
-    ],
   }),
-
-  computed: {
-    filteredBankName() {
-      return this.filterEditableInputsByCategory(1)[0];
-    },
-
-    filteredUserName() {
-      return this.filterEditableInputsByCategory(2)[0];
-    },
-
-    filteredCardNumber() {
-      return this.filterEditableInputsByCategory(3)[0];
-    },
-
-    filteredEditableInputs() {
-      return this.filterEditableInputsByCategory(4);
-    },
-  },
 
   methods: {
     enableInputEdit(input) {
-      if (!this.editable) return;
-      input.edit = true;
-      this.focusOnInput(input.id);
+      if (!this.editable || this.isInputEditing) return;
+      this.editingInput = input;
+      this.focusOnInput(input);
     },
 
-    disableInputEdit(input) {
-      input.edit = false;
+    disableInputEdit() {
+      this.editingInput = '';
     },
 
-    saveInputData(input) {
-      this.disableInputEdit(input);
+    async saveInputData(newValue, field) {
+      this.disableInputEdit();
+      this.editingInputLoading = this.generateId(field);
+      this.isInputEditing = true;
+      if (this.onEdit) await this.onEdit(this.getRequestObject(newValue, field));
+      this.editingInputLoading = '';
+      this.isInputEditing = false;
     },
 
     focusOnInput(input) {
@@ -184,17 +157,23 @@ export default {
       });
     },
 
-    filterEditableInputsByCategory(category) {
-      return this.editableInputs.filter((input) => input.category === category);
+    getRequestObject(newValue, field) {
+      return {
+        original: this.card,
+        newValue,
+        field,
+        edited: { ...this.card, [field]: newValue },
+      };
     },
 
-    removeSpacesAndMakeLowercase(string) {
-      return string.replace(' ', '').toLowerCase();
+    generateId(field) {
+      return `${this.card[field]}-${this.card.number}`;
     },
   },
 
   components: {
     CreditCardFlag: defineAsyncComponent(() => import('@components/atoms/CreditCardFlag')),
+    LoadingSpinner: defineAsyncComponent(() => import('@components/atoms/LoadingSpinner')),
   },
 };
 </script>

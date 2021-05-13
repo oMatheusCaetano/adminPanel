@@ -15,6 +15,7 @@ module.exports = {
     'no-unused-expressions': 'off',
     'vue/no-parsing-error': 'off',
     'no-param-reassign': 'off',
+    'no-plusplus': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',

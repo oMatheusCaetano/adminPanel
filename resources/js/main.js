@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import Maska from 'maska';
 
 import 'tailwindcss/tailwind.css';
 
@@ -7,4 +8,5 @@ import router from '@/router';
 
 createApp(App)
   .use(router)
+  .use(Maska)
   .mount('#app');
