@@ -11,6 +11,10 @@ module.exports = {
     'vue',
   ],
   rules: {
+    'no-multiple-template-root': 'off',
+    'no-unused-expressions': 'off',
+    'vue/no-parsing-error': 'off',
+    'no-param-reassign': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -27,4 +31,4 @@ module.exports = {
       },
     },
   },
-}
+};

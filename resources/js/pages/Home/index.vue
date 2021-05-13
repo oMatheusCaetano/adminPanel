@@ -1,9 +1,24 @@
 <template>
-  <div class="bg-red-700" style="height: 200px; width: 200px;">
-
+  <div>
+    <CreditCard
+      editable
+      flag="Master Card"
+    />
   </div>
 </template>
 
-<style>
+<script>
+import { defineAsyncComponent } from 'vue';
 
+export default {
+  components: {
+    CreditCard: defineAsyncComponent(() => import('@components/molecules/CreditCard')),
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.credit-card {
+  margin: 20px;
+}
 </style>
