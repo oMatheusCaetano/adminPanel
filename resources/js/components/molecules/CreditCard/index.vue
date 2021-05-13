@@ -9,9 +9,8 @@
       px-3
       flex flex-col
       justify-between
-      text-white
-      bg-purple-700
     "
+    :style="`background: ${color}; color: ${textColor}`"
   >
     <div class="relative" @dblclick="enableInputEdit(generateId('bankName'))">
       <div>
@@ -21,10 +20,11 @@
           :class="`${inputsClasses} w-64`"
           :value="card.bankName"
           @blur="disableInputEdit()"
-          @keyup.enter="saveInputData(generateId('bankName'))"
+          @keyup.enter="saveInputData($event.target.value, 'bankName')"
         />
       </div>
-      <h6 class="font-bold">{{ card.bankName }}</h6>
+      <LoadingSpinner v-if="editingInputLoading === generateId('bankName')" size="13px" />
+      <h6 class="font-bold" v-else>{{ card.bankName }}</h6>
     </div>
 
     <div class="relative" @dblclick="enableInputEdit(generateId('ownerName'))">
@@ -35,24 +35,27 @@
           :class="`${inputsClasses} w-64`"
           :value="card.ownerName"
           @blur="disableInputEdit()"
-          @keyup.enter="saveInputData(generateId('ownerName'))"
+          @keyup.enter="saveInputData($event.target.value, 'ownerName')"
         />
       </div>
-      <h6 class="text-sm">{{ card.ownerName }}</h6>
+      <LoadingSpinner v-if="editingInputLoading === generateId('ownerName')" size="10px" />
+      <h6 class="text-sm" v-else>{{ card.ownerName }}</h6>
     </div>
 
     <div class="relative" @dblclick="enableInputEdit(generateId('number'))">
       <div>
         <input
           v-show="editingInput === generateId('number')"
+          v-maska="'#### #### #### ####'"
           :ref="generateId('number')"
           :class="`${inputsClasses} w-64`"
           :value="card.number"
           @blur="disableInputEdit()"
-          @keyup.enter="saveInputData(generateId('number'))"
+          @keyup.enter="saveInputData($event.target.value, 'number')"
         />
       </div>
-      <h6 class="font-medium text-lg">{{ card.number }}</h6>
+      <LoadingSpinner v-if="editingInputLoading === generateId('number')" size="10px" />
+      <h6 class="font-medium text-lg" v-else>{{ card.number }}</h6>
     </div>
 
     <footer class="flex justify-around items-end">
@@ -61,11 +64,12 @@
         <div>
           <input
             v-show="editingInput === generateId('memberSince')"
+            v-maska="'##/##'"
             :ref="generateId('memberSince')"
             :class="`${inputsClasses} w-8`"
             :value="card.memberSince"
             @blur="disableInputEdit()"
-            @keyup.enter="saveInputData(generateId('memberSince'))"
+            @keyup.enter="saveInputData($event.target.value, 'memberSince')"
           />
         </div>
         <LoadingSpinner v-if="editingInputLoading === generateId('memberSince')" size="12px" />
@@ -73,15 +77,16 @@
       </div>
 
       <div class="relative" @dblclick="enableInputEdit(generateId('validThru'))">
-        <label class="text-xs font-light">M.S</label>
+        <label class="text-xs font-light">V.T</label>
         <div>
           <input
             v-show="editingInput === generateId('validThru')"
+            v-maska="'##/##'"
             :ref="generateId('validThru')"
             :class="`${inputsClasses} w-8`"
             :value="card.validThru"
             @blur="disableInputEdit()"
-            @keyup.enter="saveInputData(generateId('validThru'))"
+            @keyup.enter="saveInputData($event.target.value, 'validThru')"
           />
         </div>
         <LoadingSpinner v-if="editingInputLoading === generateId('validThru')" size="12px" />
@@ -89,10 +94,11 @@
       </div>
 
       <div class="relative" @dblclick="enableInputEdit(generateId('securityCode'))">
-        <label class="text-xs font-light">M.S</label>
+        <label class="text-xs font-light">S.C</label>
         <div>
           <input
             v-show="editingInput === generateId('securityCode')"
+            v-maska="'###'"
             :ref="generateId('securityCode')"
             :class="`${inputsClasses} w-8`"
             :value="card.securityCode"
@@ -118,7 +124,14 @@ export default {
       type: Object,
       required: true,
     },
-
+    color: {
+      type: String,
+      default: 'purple',
+    },
+    textColor: {
+      type: String,
+      default: 'white',
+    },
     onEdit: Function,
     editable: Boolean,
   },

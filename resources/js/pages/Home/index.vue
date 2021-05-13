@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CreditCard editable :card="card" :onEdit="updateCreditCard" />
+    <CreditCard editable :card="card" :onEdit="updateCreditCard" color="#612F74" />
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
       id: 'uniqueid',
       bankName: 'Nu Bank',
       ownerName: 'Matheus dos Santos Caetano',
-      number: '0000000000000000',
+      number: '0000 0000 0000 0000',
       memberSince: '02/18',
       validThru: '07/27',
       securityCode: '453',
@@ -25,7 +25,7 @@ export default {
     async updateCreditCard(data) {
       // eslint-disable-next-line no-console
       console.log(data);
-      let count = 200;
+      let count = 50;
       while (count > 0) {
         // eslint-disable-next-line no-await-in-loop
         await fetch('https://jsonplaceholder.typicode.com/posts');
