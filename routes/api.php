@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::apiResource('credit-card', 'Api\CreditCardController');
+$globalMiddlewares = ['localization'];
+
+Route::group(['middleware' => $globalMiddlewares], function () {
+    Route::apiResource('credit-card', 'Api\CreditCardController');
+});
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
