@@ -32,4 +32,29 @@ class CreditCardController extends Controller
             JsonResponse::HTTP_CREATED
         );
     }
+
+    public function update(CreditCardRequest $request, int $id): JsonResponse
+    {
+        $creditCard = CreditCard::find($id);
+
+        if (is_null($creditCard)) {
+            return response()->json(
+                ['error' => trans('messages.not_found')],
+                JsonResponse::HTTP_NOT_FOUND
+            );
+        }
+
+        $creditCard->fill($request->all())->save();
+        return response()->json($creditCard);
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        return boolval(CreditCard::destroy($id))
+        ? response()->json(['error' => trans('messages.deleted')])
+        : response()->json(
+            ['error' => trans('messages.not_found')],
+            JsonResponse::HTTP_NOT_FOUND
+        );
+    }
 }

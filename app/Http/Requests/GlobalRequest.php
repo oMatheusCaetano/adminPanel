@@ -23,4 +23,12 @@ abstract class GlobalRequest extends FormRequest
             response()->json(['errors' => $errors], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
         );
     }
+
+    protected function getId(): ?string
+    {
+        $url = $this->path();
+        $lastIndex = strlen($url) - 1;
+        $id = $url[$lastIndex];
+        return $id ?? $this->id;
+    }
 }
