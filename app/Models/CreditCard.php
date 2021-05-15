@@ -17,5 +17,7 @@ class CreditCard extends Model
         'valid_thru',
         'security_code',
         'flag',
+        'text_color',
+        'color'
     ];
 }

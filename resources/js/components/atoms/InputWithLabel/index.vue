@@ -3,6 +3,7 @@
     <label class="text-gray-500 font-medium mb-1" :for="id">
       {{ label }}
     </label>
+    <small class="text-gray-400 ml-2">{{ subLabel }}</small>
     <div>
       <input
         class="
@@ -13,6 +14,7 @@
           w-full
           py-2
           px-4
+          h-10
           text-gray-700
           leading-tight
           outline-none
@@ -39,7 +41,9 @@ export default {
     },
     modelValue: String,
     label: String,
+    subLabel: String,
     error: String,
+    color: Boolean,
   },
 };
 </script>

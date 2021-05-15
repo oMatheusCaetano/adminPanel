@@ -3,42 +3,44 @@
     class="
       credit-card-component
       h-40
+      w-72
       rounded-2xl
       py-4
       px-3
       flex flex-col
       justify-between
     "
-    :style="`background: ${color}; color: ${textColor}`"
+    :style="`background: ${card.color}; color: ${card.text_color}`"
+    v-if="card"
   >
-    <div class="relative" @dblclick="enableInputEdit(generateId('bankName'))">
+    <div class="relative" @dblclick="enableInputEdit(generateId('bank_name'))">
       <div>
         <input
-          v-show="editingInput === generateId('bankName')"
-          :ref="generateId('bankName')"
+          v-show="editingInput === generateId('bank_name')"
+          :ref="generateId('bank_name')"
           :class="`${inputsClasses} w-64`"
-          :value="card.bankName"
+          :value="card.bank_name"
           @blur="disableInputEdit()"
-          @keyup.enter="saveInputData($event.target.value, 'bankName')"
+          @keyup.enter="saveInputData($event.target.value, 'bank_name')"
         />
       </div>
-      <LoadingSpinner v-if="editingInputLoading === generateId('bankName')" size="13px" />
-      <h6 class="font-bold" v-else>{{ card.bankName }}</h6>
+      <LoadingSpinner v-if="editingInputLoading === generateId('bank_name')" size="13px" />
+      <h6 class="font-bold" v-else>{{ card.bank_name }}</h6>
     </div>
 
-    <div class="relative" @dblclick="enableInputEdit(generateId('ownerName'))">
+    <div class="relative" @dblclick="enableInputEdit(generateId('owner_name'))">
       <div>
         <input
-          v-show="editingInput === generateId('ownerName')"
-          :ref="generateId('ownerName')"
+          v-show="editingInput === generateId('owner_name')"
+          :ref="generateId('owner_name')"
           :class="`${inputsClasses} w-64`"
-          :value="card.ownerName"
+          :value="card.owner_name"
           @blur="disableInputEdit()"
-          @keyup.enter="saveInputData($event.target.value, 'ownerName')"
+          @keyup.enter="saveInputData($event.target.value, 'owner_name')"
         />
       </div>
-      <LoadingSpinner v-if="editingInputLoading === generateId('ownerName')" size="10px" />
-      <h6 class="text-sm" v-else>{{ card.ownerName }}</h6>
+      <LoadingSpinner v-if="editingInputLoading === generateId('owner_name')" size="10px" />
+      <h6 class="text-sm" v-else>{{ card.owner_name }}</h6>
     </div>
 
     <div class="relative" @dblclick="enableInputEdit(generateId('number'))">
@@ -58,58 +60,105 @@
     </div>
 
     <footer class="flex justify-around items-end">
-      <div class="relative" @dblclick="enableInputEdit(generateId('memberSince'))">
+      <div class="relative" @dblclick="enableInputEdit(generateId('member_since'))">
         <label class="text-xs font-light">M.S</label>
         <div>
           <input
-            v-show="editingInput === generateId('memberSince')"
+            v-show="editingInput === generateId('member_since')"
             v-maska="'##/##'"
-            :ref="generateId('memberSince')"
+            :ref="generateId('member_since')"
             :class="`${inputsClasses} w-8`"
-            :value="card.memberSince"
+            :value="card.member_since"
             @blur="disableInputEdit()"
-            @keyup.enter="saveInputData($event.target.value, 'memberSince')"
+            @keyup.enter="saveInputData($event.target.value, 'member_since')"
           />
         </div>
-        <LoadingSpinner v-if="editingInputLoading === generateId('memberSince')" size="12px" />
-        <p class="leading-3 font-medium" v-else>{{ card.memberSince }}</p>
+        <LoadingSpinner v-if="editingInputLoading === generateId('member_since')" size="12px" />
+        <p class="leading-3 font-medium" v-else>{{ card.member_since }}</p>
       </div>
 
-      <div class="relative" @dblclick="enableInputEdit(generateId('validThru'))">
+      <div class="relative" @dblclick="enableInputEdit(generateId('valid_thru'))">
         <label class="text-xs font-light">V.T</label>
         <div>
           <input
-            v-show="editingInput === generateId('validThru')"
+            v-show="editingInput === generateId('valid_thru')"
             v-maska="'##/##'"
-            :ref="generateId('validThru')"
+            :ref="generateId('valid_thru')"
             :class="`${inputsClasses} w-8`"
-            :value="card.validThru"
+            :value="card.valid_thru"
             @blur="disableInputEdit()"
-            @keyup.enter="saveInputData($event.target.value, 'validThru')"
+            @keyup.enter="saveInputData($event.target.value, 'valid_thru')"
           />
         </div>
-        <LoadingSpinner v-if="editingInputLoading === generateId('validThru')" size="12px" />
-        <p class="leading-3 font-medium" v-else>{{ card.validThru }}</p>
+        <LoadingSpinner v-if="editingInputLoading === generateId('valid_thru')" size="12px" />
+        <p class="leading-3 font-medium" v-else>{{ card.valid_thru }}</p>
       </div>
 
-      <div class="relative" @dblclick="enableInputEdit(generateId('securityCode'))">
+      <div class="relative" @dblclick="enableInputEdit(generateId('security_code'))">
         <label class="text-xs font-light">S.C</label>
         <div>
           <input
-            v-show="editingInput === generateId('securityCode')"
+            v-show="editingInput === generateId('security_code')"
             v-maska="'###'"
-            :ref="generateId('securityCode')"
+            :ref="generateId('security_code')"
             :class="`${inputsClasses} w-8`"
-            :value="card.securityCode"
+            :value="card.security_code"
             @blur="disableInputEdit()"
-            @keyup.enter="saveInputData($event.target.value, 'securityCode')"
+            @keyup.enter="saveInputData($event.target.value, 'security_code')"
           />
         </div>
-        <LoadingSpinner v-if="editingInputLoading === generateId('securityCode')" size="12px" />
-        <p class="leading-3 font-medium" v-else>{{ card.securityCode }}</p>
+        <LoadingSpinner v-if="editingInputLoading === generateId('security_code')" size="12px" />
+        <p class="leading-3 font-medium" v-else>{{ card.security_code }}</p>
       </div>
 
-      <CreditCardFlag :flag="card.flag" />
+      <CreditCardFlag :flag="card.flag" v-if="card?.flag" />
+    </footer>
+  </div>
+
+  <div
+    v-else
+    class="
+      credit-card-component
+      h-40
+      w-72
+      rounded-2xl
+      py-4
+      px-3
+      flex flex-col
+      justify-between
+      bg-purple-500
+      text-white
+    "
+  >
+    <div class="relative">
+      <h6 class="font-bold">{{ card?.bank_name ?? ' ' }}</h6>
+    </div>
+
+    <div class="relative">
+      <h6 class="text-sm">{{ card?.owner_name ?? ' ' }}</h6>
+    </div>
+
+    <div class="relative">
+      <h6 class="font-medium text-lg">{{ card?.number ?? ' ' }}</h6>
+    </div>
+
+    <footer class="flex justify-around items-end">
+      <div class="relative">
+        <label class="text-xs font-light">M.S</label>
+        <p class="leading-3 font-medium">{{ card?.member_since ?? ' ' }}</p>
+      </div>
+
+      <div class="relative">
+        <label class="text-xs font-light">V.T</label>
+        <p class="leading-3 font-medium">{{ card?.valid_thru ?? ' ' }}</p>
+      </div>
+
+      <div class="relative">
+        <label class="text-xs font-light">S.C</label>
+        <p class="leading-3 font-medium">{{ card?.security_code }}</p>
+      </div>
+
+      <CreditCardFlag :flag="card.flag" v-if="card?.flag" />
     </footer>
   </div>
 </template>
@@ -121,11 +170,7 @@ export default {
   props: {
     card: {
       type: Object,
-      required: true,
-    },
-    color: {
-      type: String,
-      default: 'purple',
+      default: null,
     },
     textColor: {
       type: String,

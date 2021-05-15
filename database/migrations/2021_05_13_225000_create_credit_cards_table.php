@@ -18,6 +18,8 @@ class CreateCreditCardsTable extends Migration
             $table->string('valid_thru');
             $table->integer('security_code')->unsigned();
             $table->string('flag');
+            $table->string('color');
+            $table->string('text_color');
             $table->timestamps();
         });
     }

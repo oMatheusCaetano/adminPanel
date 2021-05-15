@@ -14,6 +14,8 @@ class CreditCardRequest extends GlobalRequest
             'valid_thru' => 'string|required',
             'security_code' => 'string|required',
             'flag' => 'string|required',
+            'color' => 'string|required',
+            'text_color' => 'string|required',
         ];
     }
 }

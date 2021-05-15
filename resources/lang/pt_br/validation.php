@@ -126,7 +126,7 @@ return [
 
     'attributes' => [
         'bank_name' => 'nome do banco',
-        'bank_name' => 'nome do dono',
+        'owner_name' => 'dono do cartão',
         'number' => 'número',
         'member_since' => '\'membro desde\'',
         'valid_thru' => '\'válido até\'',
