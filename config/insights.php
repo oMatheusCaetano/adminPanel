@@ -21,6 +21,8 @@ return [
         SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff::class,
         SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff::class,
+        SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class,
+        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues::class,
     ],
     'config' => [
         PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [

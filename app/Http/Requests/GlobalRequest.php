@@ -15,12 +15,15 @@ abstract class GlobalRequest extends FormRequest
         return true;
     }
 
-    protected function failedValidation(Validator $validator)
+    protected function failedValidation(Validator $validator): void
     {
         $errors = (new ValidationException($validator))->errors();
 
         throw new HttpResponseException(
-            response()->json(['errors' => $errors], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            response()->json(
+                ['errors' => $errors],
+                JsonResponse::HTTP_UNPROCESSABLE_ENTITY
+            )
         );
     }
 
