@@ -1,5 +1,5 @@
 <template>
-  <swiper class="w-80 h-60" :options="swiperOption">
+  <swiper class="credit-card-component a w-80 h-60" :options="swiperOption">
     <swiper-slide
       class="pl-4 pt-10"
       v-for="(card, index) in cards"
@@ -28,3 +28,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.credit-card-component {
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+</style>
