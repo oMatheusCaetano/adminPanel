@@ -1,9 +1,8 @@
 <template>
   <div
     class="
-      credit-card
+      credit-card-component
       h-40
-      w-72
       rounded-2xl
       py-4
       px-3
@@ -190,3 +189,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.credit-card-component {
+  min-width: 18rem;
+  max-width: 18rem;
+}
+</style>

@@ -12,8 +12,10 @@
         "eslint-friendly-formatter": "^4.0.1",
         "laravel-mix": "^6.0.6",
         "maska": "^1.4.1",
+        "swiper": "^6.6.1",
         "tailwindcss": "^2.1.2",
         "vue": "^3.0.5",
+        "vue-awesome-swiper": "^4.1.1",
         "vue-router": "^4.0.0-0"
     },
     "devDependencies": {
