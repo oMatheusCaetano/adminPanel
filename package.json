@@ -6,6 +6,7 @@
         "build": "mix --production"
     },
     "dependencies": {
+        "@heroicons/vue": "^1.0.1",
         "@popperjs/core": "^2.6.0",
         "axios": "^0.21",
         "bootstrap": "^5.0.0-beta1",

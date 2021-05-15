@@ -1,39 +1,64 @@
 <template>
-  <div class="credit-card-page">
-    <section class="max-w-screen-md pb-5 px-5">
-      <Select />
+  <div class="credit-card-page flex">
+    <aside>
+      <header>Logo AdminPanel</header>
 
-      <form class="credit-card">
-        <ErrorMessage error="Houve um erro no servidor, tente novamente mais tarde" />
+      <main>
+        <ul>
+          <li>
+            <router-link :to="{ name: 'AdminPanelCreditCard' }">
+              Cartões de Crédito
+            </router-link>
+          </li>
+        </ul>
+      </main>
 
-        <header class="flex flex-col md:flex-row items-center">
-          <div>
-            <CreditCardSlider :cards="cards"/>
-          </div>
-          <h2 class="flex align-center mt-6 mb-8 md:ml-12 text-4xl font-medium text-gray-800">
-            Nu Bank
-          </h2>
-        </header>
+      <footer></footer>
+    </aside>
 
-        <main>
-          <Input label="Dono do cartão" />
-          <Input label="Número do cartão" />
+    <section class="w-full">
+      <nav class=" h-20"></nav>
 
-          <div class="md:flex justify-between">
-            <Input label="Membro desde" />
-            <Input label="Válido até" />
-            <Input label="Código de segurança" />
-          </div>
-        </main>
+      <main class="max-w-4xl pb-5 px-5 pl-10 pt-8">
+        <Select />
 
-        <footer>
-          <Button class="w-full my-5 md:w-min block ml-auto">
-            Salvar
-          </Button>
-        </footer>
-      </form>
+        <form class="credit-card">
+          <ErrorMessage error="Houve um erro no servidor, tente novamente mais tarde" />
+
+          <header class="flex flex-col md:flex-row items-center relative">
+            <div>
+              <CreditCardSlider  size="1.5x" :cards="cards"/>
+            </div>
+            <h2 class="flex align-center mt-6 mb-8 md:ml-12 text-4xl font-medium text-gray-800">
+              Nu Bank
+            </h2>
+            <IconButton class="absolute top-5 right-5">
+              <TrashIcon class="text-red-500" />
+            </IconButton>
+          </header>
+
+          <main>
+            <Input label="Dono do cartão" />
+            <Input label="Número do cartão" />
+
+            <div class="md:flex justify-between">
+              <Input label="Membro desde" />
+              <Input label="Válido até" />
+              <Input label="Código de segurança" />
+            </div>
+          </main>
+
+          <footer class="flex justify-between">
+            <Button class="w-full my-5 md:w-max" type="light">
+              Cancelar Edição
+            </Button>
+            <Button class="w-full my-5 md:w-max">
+              Salvar
+            </Button>
+          </footer>
+        </form>
+      </main>
     </section>
-
   </div>
 </template>
 <script>
@@ -66,11 +91,13 @@ export default {
   }),
 
   components: {
+    TrashIcon: defineAsyncComponent(() => import('@heroicons/vue/outline/TrashIcon')),
     CreditCardSlider: defineAsyncComponent(() => import('@components/organisms/CreditCardSlider')),
     Input: defineAsyncComponent(() => import('@components/atoms/Input')),
     Button: defineAsyncComponent(() => import('@components/atoms/Button')),
     ErrorMessage: defineAsyncComponent(() => import('@components/atoms/ErrorMessage')),
     Select: defineAsyncComponent(() => import('@components/atoms/Select')),
+    IconButton: defineAsyncComponent(() => import('@components/atoms/IconButton')),
   },
 };
 </script>
