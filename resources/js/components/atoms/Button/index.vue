@@ -6,6 +6,7 @@
       py-2
       px-5
       rounded
+      outline-none
     "
     :class="{
       'bg-purple-600 hover:bg-purple-900' : type === 'primary',

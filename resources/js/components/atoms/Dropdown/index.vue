@@ -17,7 +17,7 @@
         items-center
       "
     >
-      <span class="mr-1">Dropdown</span>
+      <span class="mr-1">{{ title }}</span>
       <svg
         class="fill-current h-4 w-4"
         xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,7 @@
         class="w-full"
         v-for="(option, index) in options"
         :key="index"
-        @click="option.onClick"
+        @click="selectOption(index)"
       >
         <a
           class="
@@ -65,7 +65,21 @@ export default {
 
   data: () => ({
     isHovering: false,
+    title: '',
   }),
+
+  methods: {
+    selectOption(index) {
+      this.options[index].onSelected();
+      this.title = this.options[index].label ?? '';
+    },
+  },
+
+  created() {
+    if (this.options?.length > 0) {
+      this.title = this.options[0].label ?? '';
+    }
+  },
 };
 </script>
 

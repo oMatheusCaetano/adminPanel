@@ -39,7 +39,9 @@ export default {
       type: String,
       required: true,
     },
-    modelValue: String,
+    modelValue: {
+      required: false,
+    },
     label: String,
     subLabel: String,
     error: String,

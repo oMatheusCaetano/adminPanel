@@ -1,10 +1,11 @@
 <template>
-  <swiper class="credit-card-component a w-80 h-60" :options="swiperOption">
-    <swiper-slide
-      class="pl-4 pt-10"
-      v-for="(card, index) in cards"
-      :key="index"
-    >
+  <swiper
+    class="credit-card-component a w-80 h-60"
+    :options="swiperOption"
+    @swiper="swiper"
+    @slideChange="slideChange"
+  >
+    <swiper-slide class="pl-4 pt-10" v-for="(card, index) in cards" :key="index">
       <CreditCard class="shadow-xl" :card="card" />
     </swiper-slide>
   </swiper>
@@ -17,9 +18,19 @@ import 'swiper/swiper.scss';
 import 'swiper/components/pagination/pagination.min.css';
 
 export default {
-  props: { cards: Array },
+  props: { cards: Array, onSwiper: Function, onSlideChange: Function },
 
   data: () => ({ swiperOption: {} }),
+
+  methods: {
+    swiper(data) {
+      if (this.onSwiper !== undefined) this.onSwiper(data);
+    },
+
+    slideChange(data) {
+      if (this.onSlideChange !== undefined) this.onSlideChange(data);
+    },
+  },
 
   components: {
     Swiper,

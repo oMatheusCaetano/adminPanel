@@ -1,12 +1,12 @@
 <template>
   <div class="credit-card-page">
     <main class="max-w-4xl pb-5 px-5 pl-10 pt-8">
-      <Select />
+      <Dropdown />
 
       <form class="credit-card">
         <header class="flex flex-col md:flex-row items-center relative">
           <div>
-            <CreditCardSlider size="1.5x" :cards="cards" v-if="cards.length > 0" />
+            <CreditCardSlider :cards="cards.data" v-if="cards?.data?.length > 0" />
 
             <div class="h-60 w-80 pl-4 pt-10" v-else>
               <CreditCard :card="card" />
@@ -21,7 +21,7 @@
             />
           </div>
 
-          <IconButton class="absolute top-5 right-5" v-if="edit">
+          <IconButton class="absolute top-5 right-0" v-if="edit">
             <TrashIcon class="text-red-500" />
           </IconButton>
         </header>
@@ -102,14 +102,13 @@
 
         <footer v-if="edit">
           <Button class="w-full my-5 md:w-max mr-4">Atualizar Cartão</Button>
-          <Button class="w-full my-5 md:w-max" type="light">Cancelar Edição</Button>
         </footer>
 
         <footer v-else>
-          <Button class="w-full my-5 md:w-max mr-4" @click.prevent="saveCreditCard()">
+          <Button class="w-full my-5 md:w-max mr-4">
             Salvar
           </Button>
-          <Button class="w-full my-5 md:w-max" type="light" @click.prevent="saveAndCreateAnother()">
+          <Button class="w-full my-5 md:w-max" type="light">
             Salvar e criar outro
           </Button>
         </footer>
@@ -118,104 +117,26 @@
   </div>
 </template>
 <script>
-import { defineAsyncComponent } from 'vue';
-import api, { headers } from '@/services/api';
-import Swal from 'sweetalert2';
+import { mapGetters } from 'vuex';
+import storeTypes from '@/store/types';
+import components from './components';
+// import dialog from '@/utils/dialogs';
 
 export default {
-  data: () => ({
-    edit: false,
-    error: '',
-    message: '',
-    errors: [],
-    cards: [],
-    card: {},
-  }),
+  components,
+  data: () => ({ edit: false }),
 
-  methods: {
-    async saveCreditCard() {
-      await this.createCreditCard();
-    },
-
-    async saveAndCreateAnother() {
-      const result = await this.createCreditCard();
-      if (result) {
-        this.successMessage();
-        this.resetPage();
-      }
-    },
-
-    async createCreditCard() {
-      this.loadingMessage();
-      try {
-        await api.post('credit-card', this.card, headers);
-        Swal.close();
-        return true;
-      } catch ({ response }) {
-        if (response.status !== 422) {
-          this.error = response?.data?.error ?? response?.data?.message;
-          this.errorMessage();
-        } else this.errors = response.data.errors;
-        Swal.close();
-        return false;
-      }
-    },
-
-    successMessage() {
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Cartão criado com sucessso!',
-        showConfirmButton: true,
-        timer: 2000,
-      });
-    },
-
-    errorMessage() {
-      Swal.fire({
-        icon: 'error',
-        text: 'Something went wrong!',
-      });
-    },
-
-    loadingMessage() {
-      Swal.fire({
-        title: 'Aguarde...',
-        allowOutsideClick: false,
-        width: 400,
-        padding: '3em',
-        showConfirmButton: false,
-        backdrop: `
-          rgba(0,0,123,0.4)
-          url("/images/nyan-cat.gif")
-          left top
-          no-repeat
-        `,
-      });
-    },
-
-    resetPage() {
-      this.edit = false;
-      this.error = '';
-      this.errors = [];
-      this.cards = [];
-      this.card = { color: 'purple', text_color: 'white' };
-    },
+  computed: {
+    ...mapGetters({
+      cards: storeTypes.CREDIT_CARD_GET_CARDS,
+      card: storeTypes.CREDIT_CARD_GET_CURRENT_CARD,
+      errors: storeTypes.CREDIT_CARD_GET_ERRORS,
+      error: storeTypes.CREDIT_CARD_GET_ERROR,
+    }),
   },
 
   created() {
-    this.resetPage();
-  },
-
-  components: {
-    TrashIcon: defineAsyncComponent(() => import('@heroicons/vue/outline/TrashIcon')),
-    CreditCardSlider: defineAsyncComponent(() => import('@components/organisms/CreditCardSlider')),
-    CreditCard: defineAsyncComponent(() => import('@components/molecules/CreditCard')),
-    TitleInput: defineAsyncComponent(() => import('@components/atoms/TitleInput')),
-    InputWithLabel: defineAsyncComponent(() => import('@components/atoms/InputWithLabel')),
-    Button: defineAsyncComponent(() => import('@components/atoms/Button')),
-    Select: defineAsyncComponent(() => import('@components/atoms/Select')),
-    IconButton: defineAsyncComponent(() => import('@components/atoms/IconButton')),
+    this.$store.dispatch(storeTypes.CREDIT_CARD_PAGINATE);
   },
 };
 </script>
