@@ -70,8 +70,10 @@ export default {
 
   methods: {
     selectOption(index) {
-      this.options[index].onSelected();
-      this.title = this.options[index].label ?? '';
+      if (typeof this.options[index].onSelected === 'function') {
+        this.options[index].onSelected();
+        this.title = this.options[index].label ?? '';
+      }
     },
   },
 

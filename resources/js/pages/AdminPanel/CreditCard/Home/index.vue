@@ -1,7 +1,12 @@
 <template>
   <div class="credit-card-page">
     <main class="max-w-4xl pb-5 px-5 pl-10 pt-8">
-      <Dropdown />
+      <Dropdown
+        :options="[
+          { label: 'Lista de Cartões', onSelected: loadCards },
+          { label: 'Criar novo cartão', onSelected: selectCreateNewCardOption },
+        ]"
+      />
 
       <form class="credit-card">
         <header class="flex flex-col md:flex-row items-center relative">
@@ -150,6 +155,13 @@ export default {
   },
 
   methods: {
+    selectCreateNewCardOption() {
+      this.$store.commit(storeTypes.CREDIT_CARD_SET_CURRENT_CARD, {});
+      this.$store.commit(storeTypes.CREDIT_CARD_SET_ERRORS, []);
+      this.$store.commit(storeTypes.CREDIT_CARD_SET_ERROR, '');
+      this.edit = false;
+    },
+
     onSlideChange({ activeIndex }) {
       this.$store.commit(storeTypes.CREDIT_CARD_SET_CURRENT_CARD, this.cards.data[activeIndex]);
     },
