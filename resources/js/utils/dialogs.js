@@ -2,7 +2,7 @@
 import Swal from 'sweetalert2';
 
 export default {
-  successDialog(title = '', message = '', position = 'center', showConfirmButton = true, timer = 2000) {
+  success(title = '', message = '', position = 'center', showConfirmButton = true, timer = 2000) {
     Swal.fire({
       position,
       icon: 'success',
@@ -13,11 +13,11 @@ export default {
     });
   },
 
-  errorDialog(text = '', title = '') {
+  error(text = '', title = '') {
     Swal.fire({ icon: 'error', title, text });
   },
 
-  loadingDialog(title = 'Aguarde...') {
+  loading(title = 'Aguarde...') {
     Swal.fire({
       title,
       allowOutsideClick: false,
@@ -33,7 +33,7 @@ export default {
     });
   },
 
-  confirmDialog(
+  confirm(
     title = 'Tem certeza?',
     text = 'Não será possível desfazer esta operação',
     confirmButtonText = 'Sim, remover!',
@@ -57,14 +57,7 @@ export default {
       confirmButtonText,
       cancelButtonText,
       reverseButtons: true,
-    });// .then(async (result) => {
-    //   if (result.isConfirmed) {
-    //     await onConfirm();
-    //     swalWithBootstrapButtons.fire(successText, '', 'success');
-    //   } else if (result.dismiss === Swal.DismissReason.cancel) {
-    //     swalWithBootstrapButtons.fire(cancelText, '', 'error');
-    //   }
-    // });
+    });
   },
 
   close() {

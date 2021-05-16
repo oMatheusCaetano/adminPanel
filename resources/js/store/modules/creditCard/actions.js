@@ -8,7 +8,7 @@ export default {
     try {
       const { data, status } = await api.get(uri, headers);
       commit(types.SET_CARDS, data);
-      commit(types.SET_CARD, data.data[0]);
+      commit(types.SET_CURRENT_CARD, data.data[0]);
       return { cards: data, result: true, status };
     } catch ({ response }) {
       return {

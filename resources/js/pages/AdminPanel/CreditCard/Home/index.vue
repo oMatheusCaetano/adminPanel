@@ -6,7 +6,11 @@
       <form class="credit-card">
         <header class="flex flex-col md:flex-row items-center relative">
           <div>
-            <CreditCardSlider :cards="cards.data" v-if="cards?.data?.length > 0" />
+            <CreditCardSlider
+              v-if="cards?.data?.length > 0"
+              :cards="cards.data"
+              :onSlideChange="onSlideChange"
+            />
 
             <div class="h-60 w-80 pl-4 pt-10" v-else>
               <CreditCard :card="card" />
@@ -119,8 +123,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import storeTypes from '@/store/types';
+import dialog from '@/utils/dialogs';
 import components from './components';
-// import dialog from '@/utils/dialogs';
 
 export default {
   components,
@@ -135,8 +139,16 @@ export default {
     }),
   },
 
-  created() {
-    this.$store.dispatch(storeTypes.CREDIT_CARD_PAGINATE);
+  methods: {
+    onSlideChange({ activeIndex }) {
+      this.$store.commit(storeTypes.CREDIT_CARD_SET_CURRENT_CARD, this.cards.data[activeIndex]);
+    },
+  },
+
+  async created() {
+    dialog.loading();
+    await this.$store.dispatch(storeTypes.CREDIT_CARD_PAGINATE);
+    dialog.close();
   },
 };
 </script>
