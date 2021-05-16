@@ -25,7 +25,11 @@
             />
           </div>
 
-          <IconButton class="absolute top-5 right-0" v-if="edit">
+          <IconButton
+            class="absolute top-5 right-0"
+            v-if="edit"
+            @click="removeCard()"
+          >
             <TrashIcon class="text-red-500" />
           </IconButton>
         </header>
@@ -143,12 +147,26 @@ export default {
     onSlideChange({ activeIndex }) {
       this.$store.commit(storeTypes.CREDIT_CARD_SET_CURRENT_CARD, this.cards.data[activeIndex]);
     },
+
+    async loadCards() {
+      dialog.loading();
+      const { result } = await this.$store.dispatch(storeTypes.CREDIT_CARD_PAGINATE);
+      if (!result) return dialog.error(this.error);
+      this.edit = this.cards.data.length > 0;
+      return dialog.close();
+    },
+
+    async removeCard() {
+      const { isConfirmed } = await dialog.confirm('Quer excluir este cartão?');
+      if (!isConfirmed) return dialog.error('', 'Operação cancelada', true);
+      dialog.loading();
+      const { result } = await this.$store.dispatch(storeTypes.CREDIT_CARD_DELETE);
+      return result ? dialog.success('Cartão removido com sucesso') : dialog.error(this.error);
+    },
   },
 
-  async created() {
-    dialog.loading();
-    await this.$store.dispatch(storeTypes.CREDIT_CARD_PAGINATE);
-    dialog.close();
+  created() {
+    this.loadCards();
   },
 };
 </script>

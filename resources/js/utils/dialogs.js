@@ -13,8 +13,10 @@ export default {
     });
   },
 
-  error(text = '', title = '') {
-    Swal.fire({ icon: 'error', title, text });
+  async error(text = '', title = '', autoClose) {
+    return Swal.fire({
+      icon: 'error', title, text, timer: autoClose ? 1000 : null,
+    });
   },
 
   loading(title = 'Aguarde...') {
