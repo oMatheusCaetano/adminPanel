@@ -12,7 +12,7 @@
         <header class="flex flex-col md:flex-row items-center relative">
           <div>
             <CreditCardSlider
-              v-if="cards?.data?.length > 0"
+              v-if="edit"
               :cards="cards.data"
               :onSlideChange="onSlideChange"
             />
