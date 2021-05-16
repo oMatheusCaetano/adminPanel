@@ -26,12 +26,4 @@ abstract class GlobalRequest extends FormRequest
             )
         );
     }
-
-    protected function getId(): ?string
-    {
-        $url = $this->path();
-        $lastIndex = strlen($url) - 1;
-        $id = $url[$lastIndex];
-        return $id ?? $this->id;
-    }
 }

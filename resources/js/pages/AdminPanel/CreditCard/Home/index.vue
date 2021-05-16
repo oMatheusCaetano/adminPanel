@@ -109,14 +109,20 @@
         </main>
 
         <footer v-if="edit">
-          <Button class="w-full my-5 md:w-max mr-4">Atualizar Cartão</Button>
+          <Button class="w-full my-5 md:w-max mr-4" @click.prevent="updateCard()">
+            Atualizar Cartão
+          </Button>
         </footer>
 
         <footer v-else>
-          <Button class="w-full my-5 md:w-max mr-4">
+          <Button class="w-full my-5 md:w-max mr-4" @click.prevent="createCard(false)">
             Salvar
           </Button>
-          <Button class="w-full my-5 md:w-max" type="light">
+          <Button
+            class="w-full my-5 md:w-max"
+            type="light"
+            @click.prevent="createCard()"
+          >
             Salvar e criar outro
           </Button>
         </footer>
@@ -161,7 +167,25 @@ export default {
       if (!isConfirmed) return dialog.error('', 'Operação cancelada', true);
       dialog.loading();
       const { result } = await this.$store.dispatch(storeTypes.CREDIT_CARD_DELETE);
+      if (this.cards.data.length === 0) this.edit = false;
       return result ? dialog.success('Cartão removido com sucesso') : dialog.error(this.error);
+    },
+
+    async createCard(createAnotherCard = true) {
+      dialog.loading();
+      const { result, status } = await this.$store.dispatch(
+        storeTypes.CREDIT_CARD_CREATE, { reload: !createAnotherCard, clearCard: createAnotherCard },
+      );
+      if (status === 422) return dialog.close();
+      this.edit = !createAnotherCard;
+      return result ? dialog.success('Cartão criado com sucesso') : dialog.error(this.error);
+    },
+
+    async updateCard() {
+      dialog.loading();
+      const { result, status } = await this.$store.dispatch(storeTypes.CREDIT_CARD_UPDATE);
+      if (status === 422) return dialog.close();
+      return result ? dialog.success('Cartão atualizado com sucesso') : dialog.error(this.error);
     },
   },
 

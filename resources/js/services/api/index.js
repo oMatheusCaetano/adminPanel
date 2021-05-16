@@ -16,4 +16,13 @@ export default {
     endpoint = id ? `${endpoint}/${id}` : endpoint;
     return api.delete(endpoint, { data, headers });
   },
+
+  async post(endpoint, data = {}) {
+    return api.post(endpoint, data, { headers });
+  },
+
+  async put(endpoint, id, data = {}) {
+    endpoint = id ? `${endpoint}/${id}` : endpoint;
+    return api.put(endpoint, data, { headers });
+  },
 };

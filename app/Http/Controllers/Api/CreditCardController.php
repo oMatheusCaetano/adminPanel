@@ -51,7 +51,7 @@ class CreditCardController extends Controller
     public function destroy(int $id): JsonResponse
     {
         return boolval(CreditCard::destroy($id))
-        ? response()->json(['error' => trans('messages.deleted')])
+        ? response()->json(['message' => trans('messages.deleted')])
         : response()->json(
             ['error' => trans('messages.not_found')],
             JsonResponse::HTTP_NOT_FOUND
