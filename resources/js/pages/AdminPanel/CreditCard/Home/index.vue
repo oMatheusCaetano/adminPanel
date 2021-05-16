@@ -22,16 +22,15 @@
             </div>
           </div>
 
-          <div class="mt-6 mb-8 md:ml-12">
-            <TitleInput
-              v-model="card.bank_name"
-              placeholder="Insira o nome do banco"
-              :error="errors.bank_name ? errors.bank_name[0] : ''"
-            />
-          </div>
+          <TitleInput
+            class="max-w-full my-3 mb-8 md:my-0 md:mb-0 text-center md:text-left md:ml-6"
+            v-model="card.bank_name"
+            placeholder="Insira o nome do banco"
+            :error="errors.bank_name ? errors.bank_name[0] : ''"
+          />
 
           <IconButton
-            class="absolute top-5 right-0"
+            class="absolute right-0 md:top-5"
             v-if="edit"
             @click="removeCard()"
           >
@@ -40,27 +39,27 @@
         </header>
 
         <main>
-          <div class="flex justify-between">
+          <div class="md:flex justify-between">
             <InputWithLabel
+              class="md:w-56 lg:w-60"
               type="color"
               label="Cor do cartão"
               id="cardColor"
-              class="w-60"
               v-model="card.color"
               :error="errors.color ? errors.color[0] : ''"
             />
 
             <InputWithLabel
+            class="md:w-56 lg:w-60"
               type="color"
               label="Cor do texto"
               id="cardTextColor"
-              class="w-60"
               v-model="card.text_color"
               :error="errors.text_color ? errors.text_color[0] : ''"
             />
 
             <InputWithLabel
-              class="w-60"
+            class="md:w-56 lg:w-60"
               label="Bandeira do cartão"
               id="cardFlag"
               v-model="card.flag"
@@ -85,7 +84,7 @@
 
           <div class="md:flex justify-between">
             <InputWithLabel
-              class="w-60"
+              class="md:w-56 lg:w-60"
               label="Membro desde"
               id="cardMemberSince"
               v-model="card.member_since"
@@ -94,7 +93,7 @@
             />
 
             <InputWithLabel
-              class="w-60"
+              class="md:w-56 lg:w-60"
               label="Válido até"
               id="cardValidThru"
               v-model="card.valid_thru"
@@ -103,7 +102,7 @@
             />
 
             <InputWithLabel
-              class="w-60"
+              class="md:w-56 lg:w-60"
               label="Código de segurança"
               id="cardSecutiryCode"
               v-model="card.security_code"
@@ -206,7 +205,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.w-60 { max-width: 15rem; }
-</style>

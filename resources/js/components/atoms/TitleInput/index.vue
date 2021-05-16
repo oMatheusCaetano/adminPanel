@@ -1,7 +1,7 @@
 <template>
   <div>
     <input
-      class="text-4xl font-medium text-gray-800 outline-none"
+      class="text-4xl font-medium text-gray-800 outline-none block"
       v-bind="$attrs"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
