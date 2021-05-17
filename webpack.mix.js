@@ -2,6 +2,7 @@
 
 const mix = require('laravel-mix');
 const path = require('path');
+const tailwindcss = require('tailwindcss');
 
 const jsResourcesPath = 'resources/js';
 const sassResourcesPath = 'resources/sass';
@@ -15,6 +16,12 @@ mix
   .vue({ version: 3 })
   .js(addJsResource('main'), jsPublicPath)
   .sass(addSassResource('main'), cssPublicPath)
+  .options({
+    processCssUrls: false,
+    postCss: [
+      tailwindcss('./tailwind.config.js'),
+    ],
+  })
   .webpackConfig({
     resolve: {
       alias: {
