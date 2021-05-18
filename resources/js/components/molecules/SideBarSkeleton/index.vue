@@ -6,7 +6,6 @@
         h-full
         min-h-screen
         overflow-x-hidden
-        fixed
         w-0
         md:w-20
         lg:w-60

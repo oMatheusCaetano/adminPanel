@@ -1,6 +1,7 @@
 import { defineAsyncComponent } from 'vue';
 
 export default {
+  PageWithSidebar: defineAsyncComponent(() => import('@components/templates/PageWithSidebar')),
   TrashIcon: defineAsyncComponent(() => import('@heroicons/vue/outline/TrashIcon')),
   CreditCardSlider: defineAsyncComponent(() => import('@components/organisms/CreditCardSlider')),
   CreditCard: defineAsyncComponent(() => import('@components/molecules/CreditCard')),

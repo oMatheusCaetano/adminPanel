@@ -3,7 +3,6 @@
     <div
       class="flex flex-col bg-gray-800 justify-between h-screen overflow-y-auto overflow-x-hidden"
       :class="{ showSideBar: !showSideBar }"
-      ref="sidebarSkeletonComponent"
     >
       <section>
         <header class="py-4">

@@ -1,7 +1,10 @@
 <template>
-  <PageWithSidebar>
-
-  </PageWithSidebar>
+  <div class="flex">
+    <SideBar />
+    <div class="page-with-sidebar-component bg-gray-100">
+      <slot />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -13,7 +16,7 @@ export default {
   }),
 
   components: {
-    PageWithSidebar: defineAsyncComponent(() => import('@components/templates/PageWithSidebar')),
+    SideBar: defineAsyncComponent(() => import('@components/organisms/Sidebar')),
   },
 };
 </script>
@@ -21,6 +24,8 @@ export default {
 <style lang="scss" scoped>
 .page-with-sidebar-component {
   min-height: 100vh;
-  overflow: auto;
+  max-height: 100vh;
+  width: 100%;
+  overflow-y: auto;
 }
 </style>
